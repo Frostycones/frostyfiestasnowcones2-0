@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Frosty Fiesta Snow Cones</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <img src="/images/cover1.jpg" alt="cover" id="coverImg"/>
+    <h1>Frosty Fiesta Snow Cones</h1>
+    <p class="tag">We bring the snow cone party to YOU!</p>
+  </header>
+  <main>
+    <section id="packages">
+      <h2>Choose a Package</h2>
+      <div class="package-list">
+        <button class="pkg" data-id="mini" data-price="100">Mini Party — $100</button>
+        <button class="pkg" data-id="cool" data-price="150">Cool Party — $150</button>
+        <button class="pkg" data-id="ultimate" data-price="275">Ultimate Party — $275</button>
+      </div>
+      <img src="/images/menu.jpg" alt="menu" class="menuImg"/>
+    </section>
+    <section id="booking">
+      <h2>Book Now</h2>
+      <form id="bookingForm">
+        <label>Name<input name="name" required /></label>
+        <label>Email<input name="email" type="email" required /></label>
+        <label>Phone<input name="phone" required /></label>
+        <label>Package <input name="packageId" readonly /></label>
+        <label>Date<input name="date" id="dateInput" type="date" required /></label>
+        <label>Time <select name="time" id="timeSelect" required></select></label>
+        <label>Address<input name="address" required /></label>
+        <label>Guests<input name="guests" type="number" min="1" value="20" /></label>
+        <label>Notes<textarea name="notes"></textarea></label>
+        <button type="submit">Pay & Book</button>
+      </form>
+      <div id="bookingMsg"></div>
+    </section>
+    <section id="reviews">
+      <h2>Reviews</h2>
+      <form id="reviewForm">
+        <input name="name" placeholder="Your name" required />
+        <select name="rating" required>
+          <option value="">rating</option>
+          <option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
+        </select>
+        <textarea name="text" placeholder="How was the service?" required></textarea>
+        <button>Leave Review</button>
+      </form>
+      <div id="reviewsList"></div>
+    </section>
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <input name="name" placeholder="Name" required />
+        <input name="email" placeholder="Email" required />
+        <input name="subject" placeholder="Subject" required />
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button>Send</button>
+      </form>
+      <div id="contactMsg"></div>
+    </section>
+    <section id="adminlink">
+      <p>Admin? <a href="/admin.html">Log in here</a></p>
+    </section>
+  </main>
+  <footer>
+    <p>Call: +1 (512) 643-3398 | Email: frostysnowconesparty@gmail.com | Karnes City, TX</p>
+  </footer>
+  <script src="/app.js"></script>
+</body>
+</html>

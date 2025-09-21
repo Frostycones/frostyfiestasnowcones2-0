@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Admin - Frosty Fiesta</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="admin-wrap">
+    <h2>Admin Dashboard</h2>
+    <div id="auth">
+      <form id="loginForm" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input name="username" placeholder="username" required />
+        <input name="password" type="password" placeholder="password" required />
+        <button>Login</button>
+      </form>
+      <div id="loginMsg"></div>
+    </div>
+    <div id="panel" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div><strong id="who"></strong></div>
+        <div><button id="logoutBtn">Logout</button></div>
+      </div>
+      <h3>Bookings</h3>
+      <table class="table" id="bookTable">
+        <thead><tr><th>ID</th><th>Name</th><th>Package</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    async function api(path, opts={}){
+      const res = await fetch(path, Object.assign({ headers:{'Content-Type':'application/json'} }, opts));
+      if(res.status>=400) throw new Error(await res.text());
+      return await res.json();
+    }
+    function rowHtml(b){ return `<tr><td>${b.id}</td><td>${b.name}</td><td>${b.packageId}</td><td>${b.date}</td><td>${b.time}</td><td>${b.status}</td></tr>`; }
+    async function loadBookings(){ const data = await api('/api/admin/bookings'); document.querySelector('#bookTable tbody').innerHTML = data.map(rowHtml).join(''); }
+    document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch('/api/admin/login',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+      if(res.ok){ document.getElementById('auth').style.display='none'; document.getElementById('panel').style.display='block'; const j=await res.json(); document.getElementById('who').innerText='Logged in as: '+j.user.username; loadBookings(); }
+      else document.getElementById('loginMsg').innerText='Login failed';
+    });
+    document.getElementById('logoutBtn').addEventListener('click', async ()=>{ await fetch('/api/admin/logout',{method:'POST'}); location.reload(); });
+  </script>
+</body>
+</html>
